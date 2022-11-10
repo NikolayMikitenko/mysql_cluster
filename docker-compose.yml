@@ -1,0 +1,55 @@
+version: '3.6'
+services:
+
+  mysql-m:
+    image: mysql/mysql-server
+    volumes:
+      - ./master/config/my.cnf:/etc/my.cnf:rw
+      - ./master/data:/var/lib/mysql:rw
+      - ./master/binlog:/var/log/mysql:rw
+      - ./share:/share
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=passwordm
+    networks:
+      dc:
+        ipv4_address: 192.168.60.2
+
+  mysql-s1:
+    image: mysql/mysql-server:latest
+    volumes:
+      - ./slave1/config/my.cnf:/etc/my.cnf:rw
+      - ./slave1/data:/var/lib/mysql:rw
+      - ./slave1/binlog:/var/log/mysql:rw
+      - ./share:/share    
+    ports:
+      - 13306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=passwords1
+    networks:
+      dc:
+        ipv4_address: 192.168.60.3
+
+  mysql-s2:
+    image: mysql/mysql-server:latest
+    volumes:
+      - ./slave2/config/my.cnf:/etc/my.cnf:rw
+      - ./slave2/data:/var/lib/mysql:rw
+      - ./slave2/binlog:/var/log/mysql:rw
+      - ./share:/share     
+    ports:
+      - 23306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=passwords2 
+    networks:
+      dc:
+        ipv4_address: 192.168.60.4
+
+networks:
+  dc:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 192.168.60.0/24
+        gateway: 192.168.60.1
