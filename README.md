@@ -408,6 +408,13 @@ Output:
 7 rows in set (0.00 sec)
 ```
 
+## After deletion middle column data move to nex column
+main:
+![image](https://user-images.githubusercontent.com/52753625/201881695-c3283aaf-4cea-41f4-8c54-2f89900bbc63.png)
+slaves1:
+![image](https://user-images.githubusercontent.com/52753625/201881744-daf117a2-0a9c-4b94-9550-e1cfc317794a.png)
+
+
 ### Check slave1 status one more time
 ```
 SHOW SLAVE STATUS;
